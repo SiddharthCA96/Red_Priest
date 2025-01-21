@@ -1,10 +1,18 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Signin } from "./pages/Signin";
+import { Signup } from "./pages/Signup";
 
 function App() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-    <h1 className="text-4xl font-bold text-blue-500">Welcome Red Priest</h1>
-  </div>
-  )
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;

@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
 
 dotenv.config();
-JWT_SECRET=process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET;
+
 
 
 //get the body
@@ -49,7 +50,7 @@ export const signup = async (req, res) => {
     {
       userId,
     },
-    JWT_SECRET
+    jwtSecret
   );
   res.json({
     message: "User created successfully",

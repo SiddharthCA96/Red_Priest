@@ -2,6 +2,7 @@
 - npm init -y
 - npm install express mongoose dotenv cors body-parser jsonwebtoken bcrypt
 - npm install --save-dev nodemon
+- npm i zod
 - create routes of signin sign up updateinfo
 - Create the middleware for the route protection
 - set up db and create the schema for user and create the model
@@ -11,3 +12,8 @@
 - setup tailwind npm install -D tailwindcss postcss autoprefixer
 - npx tailwindcss init
 - git init
+- create components folder
+- npm i react-router-dom
+- npm i axios
+- update the app.jsx file
+

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
 
 dotenv.config();
-JWT_SECRET=process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET;
 
 //authentication 
 export const authMiddleware = (req, res, next) => {
@@ -16,7 +16,7 @@ export const authMiddleware = (req, res, next) => {
   const token = authHeader.split("")[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, jwtSecret);
 
     if (decoded.userid) {
       req.userid = decoded.userid;
