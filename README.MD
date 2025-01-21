@@ -1,0 +1,13 @@
+- SETUP BACKEND
+- npm init -y
+- npm install express mongoose dotenv cors body-parser jsonwebtoken bcrypt
+- npm install --save-dev nodemon
+- create routes of signin sign up updateinfo
+- Create the middleware for the route protection
+- set up db and create the schema for user and create the model
+- SETUP FRONTEND
+-  npm create vite@latest frontend  
+- npm i
+- setup tailwind npm install -D tailwindcss postcss autoprefixer
+- npx tailwindcss init
+- git init
