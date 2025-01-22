@@ -10,6 +10,7 @@ import { useState } from "react"
 import { SIGN_IN } from "../utils/constants"
 
 
+
 export const Signin = () => {
 
     const[username,setUsername]=useState("");
@@ -35,7 +36,7 @@ export const Signin = () => {
                     password,
                 })
                 localStorage.setItem("token", response.data.token);
-                navigate("/Home");
+                navigate("/dashboard");
             }catch (error) {
                 console.error(
                   "Signin error:",

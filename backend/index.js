@@ -1,4 +1,5 @@
-import express from "express";
+import express from "express"
+// const express = require('express')
 import cors from "cors";
 import allRoutes from "./routes/route.js";
 

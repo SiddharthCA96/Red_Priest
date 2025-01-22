@@ -82,7 +82,7 @@ export const signin = async (req, res) => {
       {
         userid: user._id,
       },
-      JWT_SECRET
+      process.env.JWT_SECRET
     );
     res.json({
       token: token,

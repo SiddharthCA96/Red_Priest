@@ -64,7 +64,7 @@ export const Signup = () => {
                     }
                   );
                   localStorage.setItem("token", response.data.token);
-                  navigate("/home");
+                  navigate("/dashboard");
                 } catch (error) {
                   console.error(
                     "Signup error:",
