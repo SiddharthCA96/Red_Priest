@@ -2,13 +2,14 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import store from './utils/store.jsx'
-import {Provider} from 'react-redux'
+import { DataProvider } from './utils/DataContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Provider store={store}>
+    
+      <DataProvider>
     <App />
-  </Provider>
+    </DataProvider>
+  
   </StrictMode>,
 )

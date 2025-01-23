@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import DashbordNavbar from '../components/DashbordNavbar';
 import Sidebar from '../components/Sidebar';
 import LeetcodeCard from '../components/LeetcodeCard';
-import { useSelector } from 'react-redux';
 import CodeforceCard from '../components/CodeForcesCard';
+import { DataContext } from '../utils/DataContext';
+import GfgCard from '../components/GfgCard';
 
 export const Dashboard = () => {
-  const cards = useSelector((state) => state.leetcode.cards);
-  const codeforces = useSelector((state) => state.codeforces.cards);
+  const { data } = useContext(DataContext); 
+  console.log(data);
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <DashbordNavbar />
       <div className="flex flex-grow">
         <Sidebar />
-
         <div className="flex-grow ml-[180px] p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-            {cards.map((card, index) => (
-              <LeetcodeCard key={index} {...card} />
-            ))}
-            {codeforces.map((card, index) => (
-              <CodeforceCard key={index} {...card} />
-            ))}
+            {data.leetcode ? (
+              <LeetcodeCard
+                solved={data.leetcode.totalSolved}
+                total={data.leetcode.totalQuestions}
+                easy={{ solved: data.leetcode.easySolved, total: data.leetcode.totalEasy }}
+                medium={{ solved: data.leetcode.mediumSolved, total: data.leetcode.totalMedium }}
+                hard={{ solved: data.leetcode.hardSolved, total: data.leetcode.totalHard }}
+                badge={data.leetcode.ranking}
+              />
+            ) : null}
+            {data.codeforces ? (
+              <CodeforceCard
+                total={"N/A"}
+                maxRank={data.codeforces.maxRank}
+                maxRating={data.codeforces.maxRating}
+                friendOfCount={data.codeforces.friendOfCount}
+              />
+            ) : null}
+             {data.gfg ? (
+              <GfgCard
+              instituteName={data.gfg.instituteName}
+              totalProblemsSolved={data.gfg.totalProblemsSolved}
+              score={data.gfg.score}
+              podSolvedLongestStreak={data.gfg.podSolvedLongestStreak}
+              />
+            ) : null}
           </div>
         </div>
       </div>

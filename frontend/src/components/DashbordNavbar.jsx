@@ -1,23 +1,25 @@
-import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { DataContext } from "../utils/DataContext";
 
 function DashbordNavbar() {
-  const userData = useSelector((state) => state.user); // Access user state directly
+  const { data } = useContext(DataContext);
+  const gfgData = data.gfg; 
 
   return (
-    <div className="flex justify-between shadow-md bg-gray-800">
-      <Link to="/">
-        <img className="h-12 m-3 pl-10 pt-1" src={LOGO_URL} alt="Logo" />
+    <div className="flex justify-between shadow-md bg-gray-800 fixed top-0 left-0 w-full z-10">
+      <Link className="p-6 text-4xl font-bold" to="/">
+        <span className="font-extrabold text-red-600">RED </span>
+        <span>PRIEST</span>
       </Link>
       <p className="m-5 text-center font-bold text-3xl text-white">DASHBOARD</p>
       <div className="flex flex-col justify-center items-center mr-5">
         <img
           className="h-12 mt-5 rounded-3xl"
-          src={userData.profilePhoto} // Correctly mapped to state
+          src={gfgData.imageId} // Generate image URL using imageId
           alt="Profile"
         />
-        <p className="text-white text-center">{userData.userName}</p>
+        <p className="text-white text-center">{gfgData.name}</p> {/* Display name */}
       </div>
     </div>
   );

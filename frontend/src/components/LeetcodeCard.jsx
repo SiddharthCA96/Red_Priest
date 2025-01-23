@@ -4,9 +4,9 @@ const LeetcodeCard = ({ solved, total, easy, medium, hard,badge }) => {
   const solvedPercentage = Math.round((solved / total) * 100);
 
   return (
-    <div className="flex flex-col bg-gray-800 text-white p-6 rounded-xl shadow-lg w-full h-60 shadow-red-800 border border-gray-300 hover:border-white  ">
+    <div className="flex flex-col bg-gray-800 mt-20 text-white p-6 rounded-xl shadow-lg w-full h-60 shadow-red-800 border border-gray-300 hover:border-white  ">
       <h1 className="text-2xl font-bold mb-4 text-center">Leetcode</h1>
-      <h1 className="font-bold m-1 text-center text-red-500">Badge: {badge}</h1>
+      <h1 className="font-bold m-1 text-center text-red-500">Ranking: {badge}</h1>
       <div className="flex items-center justify-between">
         <div className="relative flex items-center justify-center">
           <svg
@@ -46,19 +46,19 @@ const LeetcodeCard = ({ solved, total, easy, medium, hard,badge }) => {
         {/* Difficulty Stats */}
         <div className="flex flex-col space-y-2 w-2/3">
           <div className="flex justify-between">
-            <span className="text-sm font-medium text-cyan-400">Easy</span>
+            <span className="text-lg font-medium text-cyan-400">Easy</span>
             <span className="text-sm">
               {easy.solved}/{easy.total}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm font-medium text-yellow-400">Medium</span>
+            <span className="text-lg font-medium text-yellow-400">Medium</span>
             <span className="text-sm">
               {medium.solved}/{medium.total}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm font-medium text-red-400">Hard</span>
+            <span className="text-lg font-medium text-red-400">Hard</span>
             <span className="text-sm">
               {hard.solved}/{hard.total}
             </span>

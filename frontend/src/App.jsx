@@ -4,6 +4,8 @@ import { Signup } from "./pages/Signup";
 import { Dashboard } from "./pages/Dashboard";
 import HomePage from "./pages/HomePage";
 import Chat from "./pages/Chat";
+import UpdateProfile from "./components/UpdateProfile";
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
           <Route path="/" element={<HomePage></HomePage>}></Route>
           <Route path="/dashboard/chat" element={<Chat></Chat>}></Route>
+          <Route path="/dashboard/updateprofile" element={<UpdateProfile></UpdateProfile>}></Route>
         </Routes>
       </BrowserRouter>
     </>
