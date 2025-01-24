@@ -7,8 +7,8 @@ import devLogo from "../assets/webdev-1.svg";
 import updateProfile from "../assets/updateProfile.png";
 
 function Sidebar() {
-  const location = useLocation(); // Get current route
-  const navigate = useNavigate(); // Navigate programmatically
+  const location = useLocation(); 
+  const navigate = useNavigate(); 
 
   // Function to check active link
   const isActive = (path) => location.pathname === path;
