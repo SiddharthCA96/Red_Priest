@@ -12,7 +12,7 @@ export const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-      <DashbordNavbar />
+      <DashbordNavbar label={"DASHBOARD"} />
       <div className="flex flex-grow">
         <Sidebar />
         <div className="flex-grow ml-[180px] p-8">

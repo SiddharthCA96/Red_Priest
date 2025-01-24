@@ -5,6 +5,7 @@ import { Dashboard } from "./pages/Dashboard";
 import HomePage from "./pages/HomePage";
 import Chat from "./pages/Chat";
 import UpdateProfile from "./components/UpdateProfile";
+import College from "./pages/College";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<HomePage></HomePage>}></Route>
           <Route path="/dashboard/chat" element={<Chat></Chat>}></Route>
           <Route path="/dashboard/updateprofile" element={<UpdateProfile></UpdateProfile>}></Route>
+          <Route path="/dashboard/college" element={<College></College>}></Route>
         </Routes>
       </BrowserRouter>
     </>
