@@ -27,3 +27,5 @@
 - Creating the usecodeforces hook to fetch the cf data of the user
 - Clean the code  and added redux and deleted contextapi code
 - cleaned 
+- Attendance Page Done
+
