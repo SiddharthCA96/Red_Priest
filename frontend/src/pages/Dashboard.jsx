@@ -37,8 +37,10 @@ export const Dashboard = () => {
             {cfData ? (
               <CodeforceCard
                 total={cfData.solved}
-                maxRank={cfData.maxRank}
+                currentRating={cfData.currentRating}
                 maxRating={cfData.maxRating}
+                currentRanking={cfData.currentRanking}
+                maxRank={cfData.maxRanking}
               />
             ) : null}
           </div>
