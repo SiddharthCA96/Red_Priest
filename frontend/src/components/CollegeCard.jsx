@@ -2,7 +2,7 @@ import React from "react";
 
 function BackgroundSection({ image, label, description }) {
   return (
-    <div className="flex flex-col lg:flex-row items-center bg-gray-800 text-white rounded-lg shadow-md overflow-hidden">
+    <div className="flex flex-col lg:flex-row items-center bg-gray-800 text-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:shadow-blue-500 transition-all duration-300">
       <div className="w-full lg:w-1/3 h-40 lg:h-60">
         <img
           src={image}
