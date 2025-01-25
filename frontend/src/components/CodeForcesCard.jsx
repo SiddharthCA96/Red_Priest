@@ -16,11 +16,11 @@ const CodeforceCard = ({ total, maxRank, maxRating, friendOfCount }) => {
           </span>
           <span className="text-lg font-bold">{total}</span>
         </div>
-
+{/* 
         <div className="flex justify-between">
           <span className="text-lg font-medium text-yellow-400">Rating:</span>
           <span className="text-lg font-bold">{currentRating}</span>
-        </div>
+        </div> */}
 
         <div className="flex justify-between">
           <span className="text-lg font-medium text-yellow-400">

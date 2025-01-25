@@ -1,8 +1,10 @@
 import React from "react";
 
-const LeetcodeCard = ({ solved, easy, medium, hard, rating, badge }) => {
+const LeetcodeCard = ({ solved, total, easy, medium, hard, badge }) => {
+  const solvedPercentage = calculateSolvedPercentage(solved, total);
+
   return (
-    <div className="flex flex-col bg-gray-800 mt-20 text-white p-6 rounded-xl shadow-lg w-full h-60 shadow-red-800 border border-gray-300 hover:border-white  ">
+    <div className="flex flex-col bg-gray-800 mt-20 text-white p-6 rounded-xl shadow-lg w-full h-60 shadow-red-800 border border-gray-300 hover:border-white">
       <h1 className="text-2xl font-bold mb-4 text-center">Leetcode</h1>
       <h1 className="font-bold m-1 text-center text-red-500">Ranking: {badge}</h1>
       <div className="flex items-center justify-between">
@@ -35,7 +37,6 @@ const LeetcodeCard = ({ solved, easy, medium, hard, rating, badge }) => {
             />
           </svg>
           <div className="absolute flex flex-col items-center">
-            
             <p className="text-2xl font-bold">{solved}</p>
             <p className="text-sm text-gray-400">/{total}</p>
           </div>
@@ -61,11 +62,16 @@ const LeetcodeCard = ({ solved, easy, medium, hard, rating, badge }) => {
               {hard.solved}/{hard.total}
             </span>
           </div>
-          
         </div>
       </div>
     </div>
   );
+};
+
+// Helper function to calculate solved percentage
+const calculateSolvedPercentage = (solved, total) => {
+  if (total === 0) return 0; // Prevent division by zero
+  return ((solved / total) * 100).toFixed(2); // Round to 2 decimal places
 };
 
 export default LeetcodeCard;

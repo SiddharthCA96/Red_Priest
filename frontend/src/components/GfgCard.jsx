@@ -2,7 +2,7 @@ import React from "react";
 
 const GfgCard = ({ instituteName, totalProblemsSolved, score,podSolvedLongestStreak }) => {
   return (
-    <div className="flex flex-col bg-gray-800 mt-15 text-white p-6 rounded-xl shadow-lg w-full h-60 shadow-red-800 border  border-gray-300 hover:border-white ">
+    <div className="flex flex-col bg-gray-800 mt-15 text-white p-6 rounded-xl shadow-lg w-full h-full shadow-red-800 border  border-gray-300 hover:border-white ">
       <h1 className="text-2xl font-bold mb-4 text-center">GFG</h1>
       <div className="flex flex-col space-y-4">
         <div className="flex justify-between">
