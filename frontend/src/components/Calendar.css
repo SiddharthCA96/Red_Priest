@@ -1,0 +1,83 @@
+/* Main Calendar Wrapper */
+.react-calendar {
+  width: 250px; /* Adjust the width to make it smaller */
+  max-width: 100%;
+  background-color: #000000; /* Black background */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  border-radius: 10px;
+}
+
+/* Navigation Bar */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  background-color: #000000;
+  padding: 0.25rem; /* Reduce padding */
+  border-bottom: 1px solid #ddd;
+}
+
+.react-calendar__navigation button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  padding: 0.25rem; /* Smaller button padding */
+  font-size: 0.85rem; /* Decrease font size */
+}
+
+.react-calendar__navigation button:hover {
+  color: #2d76c4;
+}
+
+/* Weekdays */
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-size: 0.7rem; /* Smaller font size for weekdays */
+  font-weight: bold;
+  background-color: #030303;
+  border-bottom: 1px solid #ddd;
+  color: white; /* White text for weekdays */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.25rem; /* Reduce padding */
+  text-align: center;
+  color: white;
+}
+
+/* Dates (Tiles) */
+.react-calendar__tile {
+  padding: 0.75rem; /* Reduce tile padding */
+  background: #000000; /* Black background */
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem; /* Decrease font size for dates */
+  color: rgba(3, 174, 241, 0.774); /* Dark orange font color */
+  /* font-style: bold; */
+}
+
+.react-calendar__tile--now {
+  background:white; /* Highlight the current date with red */
+  color: rgb(24, 20, 230); /* Dark orange text for the current date */
+  border-radius: 50%;
+}
+
+.react-calendar__tile--active {
+  background: #007bff; 
+  color: white; 
+  border-radius: 50%;
+}
+
+.react-calendar__tile--hover:hover {
+  background: #f0f8ff; /* Hover effect */
+  border-radius: 50%;
+}
+
+/* Disable tiles for unavailable dates */
+.react-calendar__tile--disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
