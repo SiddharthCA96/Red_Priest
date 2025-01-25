@@ -14,6 +14,8 @@ export const Dashboard = () => {
 
   // calling the useselector to get the data from the store
   const data = useSelector((state) => state.leetcode);
+  console.log(data);
+  
   const cfData = useSelector((state) => state.codeforces);
   console.log(cfData);
   
@@ -26,12 +28,12 @@ export const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
             {data ? (
               <LeetcodeCard
-                solved={data.totalSolved}
-                easy={data.totalEasy}
-                medium={data.totalMedium}
-                hard={data.totalHard}
-                rating={data.curentRating}
-                badge={data.currentBadge}
+                solved={data.solved}
+                easy={data.easy}
+                medium={data.medium}
+                hard={data.hard}
+                rating={data.rating}
+                badge={data.badge}
               />
             ) : null}
             {cfData ? (

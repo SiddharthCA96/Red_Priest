@@ -23,7 +23,7 @@ const useCodeforces = () => {
 
       //get total solved quetsions
       const submissions = solvedResponse.data.result;
-      console.log(submissions);
+      // console.log(submissions);
 
       const uniqueProblems = new Set();
       submissions.forEach((submission) => {
@@ -43,11 +43,11 @@ const useCodeforces = () => {
       const currentRank = profile.rank || null;
       const maxRank = profile.maxRank || null;
 
-      console.log("Total Problems Solved:", problemsSolved);
-      console.log("Current Rating:", currentRating);
-      console.log("Max Rating:", maxRating);
-      console.log("Max Rank:", maxRank);
-      console.log("Current Rank:", currentRank);
+      // console.log("Total Problems Solved:", problemsSolved);
+      // console.log("Current Rating:", currentRating);
+      // console.log("Max Rating:", maxRating);
+      // console.log("Max Rank:", maxRank);
+      // console.log("Current Rank:", currentRank);
 
       //dispatch the action to save all this in redux store
       dispatch(
