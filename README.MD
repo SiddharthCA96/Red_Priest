@@ -17,3 +17,12 @@
 - npm i axios
 - update the app.jsx file
 - signin signup done
+
+
+
+
+- Updated the leetcode,cf slices
+- Creating a hook(useleetcode) to fetch the users leetcode data
+- Updated main.jsx as there was dikkat and also provided the store to whole app using provider
+- Creating the usecodeforces hook to fetch the cf data of the user
+- Clean the code 

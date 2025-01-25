@@ -1,25 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  cards: [
-    {
-      solved: 581,
-      total: 3430,
-      easy: { solved: 215, total: 852 },
-      medium: { solved: 332, total: 1786 },
-      hard: { solved: 34, total: 792 },
-      badge: "Knight"
-    }
-  ],
-};
-
 const leetcodeSlice = createSlice({
-  name: 'leetcode',
-  initialState,
+  name: "leetcode",
+  initialState: {
+    solved: 0,
+    easy: 0,
+    medium: 0,
+    hard: 0,
+    rating: 1500,
+    badge: null,
+  },
   reducers: {
     updateCard(state, action) {
-      const { index, updatedCard } = action.payload;
-      state.cards[index] = updatedCard;
+      state.solved = action.payload.totalSolved || 0;
+      state.easy = action.payload.totalEasy || 0;
+      state.medium = action.payload.totalMedium || 0;
+      state.hard = action.payload.totalHard || 0;
+      state.rating = action.payload.currentRating || 1500;
+      state.badge = action.payload.currentBadge || null;
     },
   },
 });

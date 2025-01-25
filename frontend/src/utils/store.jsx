@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import leetcodeReducer from './leetcodeSlice';  
 import codeforcesReducer from './codeforcesSlice'; 
 import userReducer from './userSlice'; 
-const store = configureStore({
+const appStore = configureStore({
   reducer: {
     leetcode: leetcodeReducer,   
     codeforces: codeforcesReducer,
@@ -11,4 +11,4 @@ const store = configureStore({
   },
 });
 
-export default store;
+export default appStore;

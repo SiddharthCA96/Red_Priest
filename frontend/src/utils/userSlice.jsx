@@ -1,22 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import profilePhoto from '../assets/profilePic.png';
 
-const initialState = {
-  profilePhoto: profilePhoto, 
-  userName: "Jay Prakash",   
-};
+
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState:{
+    profilePhoto: profilePhoto, 
+    userName: "Jay Prakash",   
+  },
   reducers: {
     updateUserInfo(state, action) {
-      const { profilePhoto, userName } = action.payload;
-      state.profilePhoto = profilePhoto || state.profilePhoto;
-      state.userName = userName || state.userName;
+      //sets the initial state as the payload
+      return action.payload;
     },
+    removeUser(state,action){
+      return null;
+    }
   },
 });
 
-export const { updateUserInfo } = userSlice.actions;
+export const { updateUserInfo,removeUser } = userSlice.actions;
 export default userSlice.reducer;
