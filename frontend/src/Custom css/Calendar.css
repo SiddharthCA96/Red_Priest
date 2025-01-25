@@ -81,3 +81,21 @@
   color: #ccc;
   cursor: not-allowed;
 }
+
+.bg-green-500 {
+  background-color: #0e9119 ;
+  /* width: 8px; */
+  /* height: 10px; */
+  margin:4px;
+  padding:4px
+}
+
+.bg-red-500 {
+  background-color: #9c2935 ;
+}
+
+.text-white {
+  color: #fff ;
+}
+
+
