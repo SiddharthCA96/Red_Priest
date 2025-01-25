@@ -26,3 +26,4 @@
 - Updated main.jsx as there was dikkat and also provided the store to whole app using provider
 - Creating the usecodeforces hook to fetch the cf data of the user
 - Clean the code  and added redux and deleted contextapi code
+- cleaned 
