@@ -16,7 +16,7 @@ export const Dashboard = () => {
       <div className="flex flex-grow">
         <Sidebar />
         <div className="flex-grow ml-[180px] p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
             {data.leetcode ? (
               <LeetcodeCard
                 solved={data.leetcode.totalSolved}
