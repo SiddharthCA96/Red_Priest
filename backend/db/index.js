@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { string } from "zod";
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;
@@ -46,7 +47,25 @@ const UserSchema=new mongoose.Schema({
         maxLength:30,
     },
 });
+//schema for the userDetails about coding profiles
+
+const ProfilesSchema=new mongoose.Schema({
+    leetcodeId:{
+        type:String,
+    },
+    codeforcesId:{
+        type:String,
+    },
+    gfgId:{
+        type:String,
+    },
+    githubId:{
+        type:String,
+    },
+});
 //create the  models
 
 //user model
 export const User=mongoose.model('User',UserSchema);
+
+export const UserProfiles=mongoose.model('UserProfiles',ProfilesSchema);

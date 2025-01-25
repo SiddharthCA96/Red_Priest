@@ -1,12 +1,10 @@
-import zod from "zod"
-import {User} from "../db/index.js"
-import jwt from "jsonwebtoken"
+import zod, { string } from "zod";
+import { User, UserProfiles } from "../db/index.js";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 const jwtSecret = process.env.JWT_SECRET;
-
-
 
 //get the body
 const signupBody = zod.object({
@@ -138,5 +136,38 @@ export const getUser = async (req, res) => {
       lastName: user.lastName,
       _id: user._id,
     })),
+  });
+};
+
+const profileBody = zod.object({
+  leetcodeId: zod.string().optional(),
+  codeforcesId: zod.string().optional(),
+  gfgId: zod.string().optional(),
+  githubId: zod.string().optional(),
+});
+
+//function to save the users profiles in mongo db
+export const saveDetails = async (req, res) => {
+  const { success } = profileBody.safeParse(req.body);
+  if (!success) {
+    return res.status(411).json({
+      message: "Incorrect inputs",
+    });
+  }
+
+  const data = await UserProfiles.create({
+    leetcodeId: req.body.leetcodeId || null,
+    codeforcesId: req.body.codeforcesId || null,
+    gfgId: req.body.gfgId || null,
+    githubId: req.body.githubId || null,
+  });
+  if (data) {
+    res.json({
+      msg: "Profiles Updated",
+    });
+    return;
+  }
+  res.status(411).json({
+    message: "Error while updating Profiles",
   });
 };
