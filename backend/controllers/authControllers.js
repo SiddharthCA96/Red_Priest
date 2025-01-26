@@ -205,3 +205,20 @@ export const saveSubject=async(req,res)=>{
     message: "Error while Creating Subject",
   });
 }
+
+//function to get all subjects from db
+export const getSubject = async (req, res) => {
+  try {
+    const allSubjects = await SubjectProfiles.find({});
+    const subjects = allSubjects.map((subject) => ({
+      subjectName: subject.subjectName,
+      presentDays: subject.presentDays,
+      absentDays: subject.absentDays,
+      _id: subject._id,
+    }));
+    res.json({ subjects });
+  } catch (error) {
+    console.error('Error fetching subjects:', error);
+    res.status(500).json({ error: 'Failed to fetch subjects' });
+  }
+};

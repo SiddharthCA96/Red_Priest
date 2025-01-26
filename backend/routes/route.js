@@ -1,5 +1,5 @@
 import express from "express";
-import { signin,signup,updateInfo,getUser,saveDetails,saveSubject } from "../controllers/authControllers.js";
+import { signin,signup,updateInfo,getUser,saveDetails,saveSubject, getSubject } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -15,6 +15,9 @@ router.post("/saveDetails",saveDetails)
 
 //route to create a subject in attendence tracker
 router.post("/createSubject",saveSubject)
+
+//route to fetch all subjects fromm subjectProfiles (in attendence section)
+router.get("/getSubject",getSubject)
 
 //update uder personal info route
 router.put("updateInfo", authMiddleware, updateInfo);
