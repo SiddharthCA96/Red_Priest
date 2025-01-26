@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button } from './Button';
 import { InputBox } from './InputBox';
 import axios from 'axios';
 import { DataContext } from '../utils/DataContext'; 
 import { useNavigate } from 'react-router-dom'; 
+
+
 
 function UpdateProfile() {
   const { updateData } = useContext(DataContext); 
@@ -11,6 +13,8 @@ function UpdateProfile() {
   const [codeforces, setcodeforces] = useState('');
   const [gfgId, setGfgId] = useState('');
   const [GithubId, setGitHubId] = useState('');
+
+ 
   
   
   const navigate = useNavigate(); 
@@ -21,7 +25,7 @@ function UpdateProfile() {
       const leetcodePromise = axios
         .get(`https://leetcode-stats-api.herokuapp.com/${leetcodeId}`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           updateData('leetcode', {
             ranking: response.data.ranking,
             easySolved: response.data.easySolved,
