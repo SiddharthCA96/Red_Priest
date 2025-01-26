@@ -11,6 +11,7 @@ import {
   updateSubjectAttendence,
   createTodo,
   getTodos,
+  deleteTodo,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
@@ -45,6 +46,9 @@ router.post("/createTodo",createTodo);
 
 //route to fetch all todos
 router.get("/getTodos",getTodos);
+
+//route to delete todo
+router.delete("/deleteTodo",deleteTodo);
 
 
 //get user route

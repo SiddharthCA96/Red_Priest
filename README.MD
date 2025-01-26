@@ -36,3 +36,4 @@
 - updateSubjectAttendence route 
 - Create Todo route done
 - Get All todos route done
+- Delete todo route done

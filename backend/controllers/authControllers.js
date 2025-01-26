@@ -341,17 +341,39 @@ export const createTodo = async (req, res) => {
 };
 
 //function to fetch all todos
-export const getTodos=async(req,res)=>{
-  try{
-    const allTodos=await Todo.find({});
-    const todos=allTodos.map((todo)=>({
-      title:todo.title,
-      description:todo.description,
-      isCompleted:todo.isCompleted,
+export const getTodos = async (req, res) => {
+  try {
+    const allTodos = await Todo.find({});
+    const todos = allTodos.map((todo) => ({
+      title: todo.title,
+      description: todo.description,
+      isCompleted: todo.isCompleted,
     }));
-    res.json({todos});
-  } catch(error){
+    res.json({ todos });
+  } catch (error) {
     console.error("Error fetching todos:", error);
     res.status(500).json({ error: "Failed to fetch todos" });
   }
-}
+};
+//function to delete a todo
+export const deleteTodo = async (req, res) => {
+  try {
+    const { title } = req.body;
+    console.log(title);
+
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    const result = await Todo.findOneAndDelete({ title });
+
+    if (!result) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+
+    res.status(200).json({ message: "Todo deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting todo:", error);
+    res.status(500).json({ message: "Failed to delete todo" });
+  }
+};
