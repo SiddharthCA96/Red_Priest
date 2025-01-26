@@ -8,6 +8,7 @@ import {
   saveSubject,
   getSubject,
   deleteSubject,
+  updateSubjectAttendence,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
@@ -30,6 +31,9 @@ router.get("/getSubject", getSubject);
 
 //route to delete a subject from subjectsProfiles
 router.delete("/deleteSubject", deleteSubject);
+
+//route to updateSubjectAttendence
+router.patch("/updateSubjectAttendence",updateSubjectAttendence);
 
 //update uder personal info route
 router.put("updateInfo", authMiddleware, updateInfo);

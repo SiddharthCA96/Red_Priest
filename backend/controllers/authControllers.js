@@ -1,5 +1,5 @@
 import zod, { string } from "zod";
-import { User, UserProfiles,SubjectProfiles } from "../db/index.js";
+import { User, UserProfiles, SubjectProfiles } from "../db/index.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -175,26 +175,37 @@ export const saveDetails = async (req, res) => {
 };
 
 ///subject profiles
-const subjectBody=zod.object({
-  subjectName:zod.string(),
-  presentDaye:zod.number().optional(),
-  absentDays:zod.number().optional(),
+const subjectBody = zod.object({
+  subjectName: zod.string(),
+  presentDays: zod
+    .array(
+      zod.string().refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      })
+    )
+    .optional(),
+  absentDays: zod
+    .array(
+      zod.string().refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      })
+    )
+    .optional(),
 });
-
 //function to save a subject details in mongo db
-export const saveSubject=async(req,res)=>{
+export const saveSubject = async (req, res) => {
   const { success } = subjectBody.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
       message: "Please give subject name",
     });
   }
-  const subject=await SubjectProfiles.create({
-    subjectName:req.body.subjectName,
-    presentDays:0,
-    absentDays:0
+  const subject = await SubjectProfiles.create({
+    subjectName: req.body.subjectName,
+    presentDays: [],
+    absentDays: [],
   });
-  if(subject){
+  if (subject) {
     res.json({
       msg: "Subject Created",
       subject,
@@ -204,7 +215,7 @@ export const saveSubject=async(req,res)=>{
   res.status(411).json({
     message: "Error while Creating Subject",
   });
-}
+};
 
 //function to get all subjects from db
 export const getSubject = async (req, res) => {
@@ -218,8 +229,8 @@ export const getSubject = async (req, res) => {
     }));
     res.json({ subjects });
   } catch (error) {
-    console.error('Error fetching subjects:', error);
-    res.status(500).json({ error: 'Failed to fetch subjects' });
+    console.error("Error fetching subjects:", error);
+    res.status(500).json({ error: "Failed to fetch subjects" });
   }
 };
 
@@ -228,7 +239,7 @@ export const deleteSubject = async (req, res) => {
   try {
     const { _id } = req.query;
     console.log(_id);
-    
+
     const result = await SubjectProfiles.findByIdAndDelete(_id);
 
     if (!result) {
@@ -239,5 +250,53 @@ export const deleteSubject = async (req, res) => {
   } catch (error) {
     console.error("Error deleting subject:", error);
     res.status(500).json({ message: "Failed to delete subject" });
+  }
+};
+//function to update the attendence of a particular subject
+export const updateSubjectAttendence = async (req, res) => {
+  try {
+    const { _id } = req.query;
+    const { date, action } = req.body; // action can be "markPresent", "markAbsent", or "clear"
+
+    if (!_id || !date || !action) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    if (!Date.parse(date)) {
+      return res.status(400).json({ message: "Invalid date format" });
+    }
+    const subject = await SubjectProfiles.findById(_id);
+    if (!subject) {
+      return res.status(404).json({ message: "Subject not found" });
+    }
+    switch (action) {
+      case "markPresent":
+        if (!subject.presentDays.includes(date)) {
+          subject.presentDays.push(date);
+        }
+        break;
+      case "markAbsent":
+        if (!subject.absentDays.includes(date)) {
+          subject.absentDays.push(date);
+        }
+        break;
+      case "clear":
+        subject.presentDays = subject.presentDays.filter(d => d !== date);
+        subject.absentDays = subject.absentDays.filter(d => d !== date);
+        break;
+      default:
+        return res.status(400).json({ message: "Invalid action" });
+    }
+    await subject.save();
+    res.status(200).json({
+      message: "Subject attendance updated successfully",
+      subject: {
+        subjectName: subject.subjectName,
+        presentDays: subject.presentDays,
+        absentDays: subject.absentDays,
+      },
+    });
+  } catch (error) {
+    console.error("Error in updating subject attendance:", error);
+    res.status(500).json({ message: "Failed to update subject attendance" });
   }
 };
