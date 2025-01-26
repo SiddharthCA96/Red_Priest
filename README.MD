@@ -32,3 +32,4 @@
 - Created the subjectSchema for the atttendence tracker section
 - createSubject route done and working 
 - getSubject(to fetch all subjects in db in attendence section) route done and working 
+- deleteSubject(to delete a subject) done and tested in postman

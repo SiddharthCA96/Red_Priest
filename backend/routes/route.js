@@ -1,5 +1,14 @@
 import express from "express";
-import { signin,signup,updateInfo,getUser,saveDetails,saveSubject, getSubject } from "../controllers/authControllers.js";
+import {
+  signin,
+  signup,
+  updateInfo,
+  getUser,
+  saveDetails,
+  saveSubject,
+  getSubject,
+  deleteSubject,
+} from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -11,13 +20,16 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 
 //save user profiles detail route
-router.post("/saveDetails",saveDetails)
+router.post("/saveDetails", saveDetails);
 
 //route to create a subject in attendence tracker
-router.post("/createSubject",saveSubject)
+router.post("/createSubject", saveSubject);
 
 //route to fetch all subjects fromm subjectProfiles (in attendence section)
-router.get("/getSubject",getSubject)
+router.get("/getSubject", getSubject);
+
+//route to delete a subject from subjectsProfiles
+router.delete("/deleteSubject", deleteSubject);
 
 //update uder personal info route
 router.put("updateInfo", authMiddleware, updateInfo);

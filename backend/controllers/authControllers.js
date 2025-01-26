@@ -222,3 +222,22 @@ export const getSubject = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch subjects' });
   }
 };
+
+//function to delete a subject
+export const deleteSubject = async (req, res) => {
+  try {
+    const { _id } = req.query;
+    console.log(_id);
+    
+    const result = await SubjectProfiles.findByIdAndDelete(_id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Subject not found" });
+    }
+
+    res.status(200).json({ message: "Subject deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting subject:", error);
+    res.status(500).json({ message: "Failed to delete subject" });
+  }
+};
