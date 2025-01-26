@@ -10,6 +10,7 @@ import {
   deleteSubject,
   updateSubjectAttendence,
   createTodo,
+  getTodos,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
@@ -20,6 +21,9 @@ const router = express.Router();
 router.post("/signup", signup);
 //signin route
 router.post("/signin", signin);
+
+//update uder personal info route
+router.put("updateInfo", authMiddleware, updateInfo);
 
 //save user profiles detail route
 router.post("/saveDetails", saveDetails);
@@ -39,8 +43,9 @@ router.patch("/updateSubjectAttendence",updateSubjectAttendence);
 //route to create todo
 router.post("/createTodo",createTodo);
 
-//update uder personal info route
-router.put("updateInfo", authMiddleware, updateInfo);
+//route to fetch all todos
+router.get("/getTodos",getTodos);
+
 
 //get user route
 router.get("getUser", getUser);

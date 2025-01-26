@@ -339,3 +339,19 @@ export const createTodo = async (req, res) => {
     message: "Error while Creating Todo",
   });
 };
+
+//function to fetch all todos
+export const getTodos=async(req,res)=>{
+  try{
+    const allTodos=await Todo.find({});
+    const todos=allTodos.map((todo)=>({
+      title:todo.title,
+      description:todo.description,
+      isCompleted:todo.isCompleted,
+    }));
+    res.json({todos});
+  } catch(error){
+    console.error("Error fetching todos:", error);
+    res.status(500).json({ error: "Failed to fetch todos" });
+  }
+}

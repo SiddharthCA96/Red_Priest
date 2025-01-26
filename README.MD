@@ -34,3 +34,5 @@
 - getSubject(to fetch all subjects in db in attendence section) route done and working 
 - deleteSubject(to delete a subject) done and tested in postman
 - updateSubjectAttendence route 
+- Create Todo route done
+- Get All todos route done
