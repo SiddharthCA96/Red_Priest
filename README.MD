@@ -27,5 +27,8 @@
 - Creating the usecodeforces hook to fetch the cf data of the user
 - Clean the code  and added redux and deleted contextapi code
 - cleaned 
-- profile update route done- Attendance Page Done
+- profile update route done
+- Attendance Page Done
+- Created the subjectSchema for the atttendence tracker section
+- createSubject route done and working 
 

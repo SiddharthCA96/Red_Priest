@@ -1,5 +1,5 @@
 import zod, { string } from "zod";
-import { User, UserProfiles } from "../db/index.js";
+import { User, UserProfiles,SubjectProfiles } from "../db/index.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -139,6 +139,7 @@ export const getUser = async (req, res) => {
   });
 };
 
+//user profiles body
 const profileBody = zod.object({
   leetcodeId: zod.string().optional(),
   codeforcesId: zod.string().optional(),
@@ -164,6 +165,7 @@ export const saveDetails = async (req, res) => {
   if (data) {
     res.json({
       msg: "Profiles Updated",
+      data,
     });
     return;
   }
@@ -171,3 +173,35 @@ export const saveDetails = async (req, res) => {
     message: "Error while updating Profiles",
   });
 };
+
+///subject profiles
+const subjectBody=zod.object({
+  subjectName:zod.string(),
+  presentDaye:zod.number().optional(),
+  absentDays:zod.number().optional(),
+});
+
+//function to save a subject details in mongo db
+export const saveSubject=async(req,res)=>{
+  const { success } = subjectBody.safeParse(req.body);
+  if (!success) {
+    return res.status(411).json({
+      message: "Please give subject name",
+    });
+  }
+  const subject=await SubjectProfiles.create({
+    subjectName:req.body.subjectName,
+    presentDays:0,
+    absentDays:0
+  });
+  if(subject){
+    res.json({
+      msg: "Subject Created",
+      subject,
+    });
+    return;
+  }
+  res.status(411).json({
+    message: "Error while Creating Subject",
+  });
+}

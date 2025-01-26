@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { string } from "zod";
+import { optional, string } from "zod";
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;
@@ -63,9 +63,41 @@ const ProfilesSchema=new mongoose.Schema({
         type:String,
     },
 });
+
+//attendence subject schema
+const SubjectSchema=new mongoose.Schema({
+    subjectName:{
+        type:String,
+        required:true,
+        unique:true,
+        trim:true,
+        minLength:1,
+        maxLength:30,
+    },
+    presentDays:{
+        type:Number,
+        default:0,
+        min:0,
+        max:200,
+    },
+    absentDays:{
+        type:Number,
+        default:0,
+        min:0,
+        max:200,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now, 
+      },
+})
 //create the  models
 
 //user model
 export const User=mongoose.model('User',UserSchema);
 
+//user profiles model
 export const UserProfiles=mongoose.model('UserProfiles',ProfilesSchema);
+
+//attendence trackers subject model
+export const SubjectProfiles=mongoose.model('SubjectProfiles',SubjectSchema);
