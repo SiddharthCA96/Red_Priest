@@ -1,5 +1,5 @@
 import zod, { string } from "zod";
-import { User, UserProfiles, SubjectProfiles } from "../db/index.js";
+import { User, UserProfiles, SubjectProfiles, Todo } from "../db/index.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -280,8 +280,8 @@ export const updateSubjectAttendence = async (req, res) => {
         }
         break;
       case "clear":
-        subject.presentDays = subject.presentDays.filter(d => d !== date);
-        subject.absentDays = subject.absentDays.filter(d => d !== date);
+        subject.presentDays = subject.presentDays.filter((d) => d !== date);
+        subject.absentDays = subject.absentDays.filter((d) => d !== date);
         break;
       default:
         return res.status(400).json({ message: "Invalid action" });
@@ -299,4 +299,43 @@ export const updateSubjectAttendence = async (req, res) => {
     console.error("Error in updating subject attendance:", error);
     res.status(500).json({ message: "Failed to update subject attendance" });
   }
+};
+
+//todo body
+const todoBody = zod.object({
+  title: zod.string(),
+  description: zod.string().optional(),
+  isCompleted: zod.boolean().optional(),
+});
+//function to create a todo
+export const createTodo = async (req, res) => {
+  const { success } = todoBody.safeParse(req.body);
+  if (!success) {
+    return res.status(411).json({
+      message: "Please give Todo a Title",
+    });
+  }
+  const existingTodo = await Todo.findOne({
+    title: req.body.title,
+  });
+  if (existingTodo) {
+    return res.status(411).json({
+      message: "Todo already exists",
+    });
+  }
+  const todo = await Todo.create({
+    title: req.body.title,
+    description: req.body.description,
+    isCompleted: false,
+  });
+  if (todo) {
+    res.json({
+      msg: "Todo Created",
+      todo,
+    });
+    return;
+  }
+  res.status(411).json({
+    message: "Error while Creating Todo",
+  });
 };

@@ -9,6 +9,7 @@ import {
   getSubject,
   deleteSubject,
   updateSubjectAttendence,
+  createTodo,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
@@ -34,6 +35,9 @@ router.delete("/deleteSubject", deleteSubject);
 
 //route to updateSubjectAttendence
 router.patch("/updateSubjectAttendence",updateSubjectAttendence);
+
+//route to create todo
+router.post("/createTodo",createTodo);
 
 //update uder personal info route
 router.put("updateInfo", authMiddleware, updateInfo);

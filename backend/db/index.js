@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { optional, string } from "zod";
+import { optional, string, union } from "zod";
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;
@@ -84,6 +84,31 @@ const SubjectSchema = new mongoose.Schema({
   },
 });
 
+//todo schema
+const TodoSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        required:true,
+        trim:true,
+        unique:true,
+        minLength:1,
+        maxLength:30,
+    },
+    description:{
+        type:String,
+        trim:true,
+        maxLength:500,
+    },
+    isCompleted:{
+        type:Boolean,
+        default:false,
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+    }
+});
+
 //create the  models
 
 //user model
@@ -94,3 +119,6 @@ export const UserProfiles = mongoose.model("UserProfiles", ProfilesSchema);
 
 //attendence trackers subject model
 export const SubjectProfiles = mongoose.model("SubjectProfiles", SubjectSchema);
+
+//todo model
+export const Todo=mongoose.model("Todo",TodoSchema);
