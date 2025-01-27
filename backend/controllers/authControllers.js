@@ -1,5 +1,5 @@
 import zod, { string } from "zod";
-import { User, UserProfiles, SubjectProfiles, Todo } from "../db/index.js";
+import { User, SubjectProfiles, Todo } from "../db/index.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -9,9 +9,9 @@ const jwtSecret = process.env.JWT_SECRET;
 //get the body
 const signupBody = zod.object({
   username: zod.string().email(),
-  firstName: zod.string(),
-  lastName: zod.string(),
-  password: zod.string(),
+  firstName: zod.string().min(1),
+  lastName: zod.string().min(1),
+  password: zod.string().min(3),
 });
 
 //signup  forr user
@@ -58,7 +58,7 @@ export const signup = async (req, res) => {
 
 const signinBody = zod.object({
   username: zod.string().email(),
-  password: zod.string(),
+  password: zod.string().min(3),
 });
 
 //signin for user
@@ -112,7 +112,7 @@ export const updateInfo = async (req, res) => {
   });
 };
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res) => {  
   const filter = req.query.filter || "";
   const users = await User.find({
     $or: [
@@ -156,27 +156,42 @@ export const saveDetails = async (req, res) => {
     });
   }
 
-  const data = await UserProfiles.create({
-    leetcodeId: req.body.leetcodeId || null,
-    codeforcesId: req.body.codeforcesId || null,
-    gfgId: req.body.gfgId || null,
-    githubId: req.body.githubId || null,
-  });
-  if (data) {
-    res.json({
-      msg: "Profiles Updated",
-      data,
+  try {
+    const { leetcodeId, codeforcesId, gfgId, githubId } = req.body;
+    // Find the user and update their profiles
+    const userId = req.userid; 
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        leetcodeId: leetcodeId || null,
+        codeforcesId: codeforcesId || null,
+        gfgId: gfgId || null,
+        githubId: githubId || null,
+      },
+      { new: true, runValidators: true } // Return the updated document and validate the changes
+    );
+
+    if (updatedUser) {
+      return res.json({
+        message: "Profiles Updated",
+        data: updatedUser,
+      });
+    }
+
+    res.status(404).json({
+      message: "User not found",
     });
-    return;
+  } catch (error) {
+    console.error("Error while updating profiles:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
   }
-  res.status(411).json({
-    message: "Error while updating Profiles",
-  });
 };
 
 ///subject profiles
 const subjectBody = zod.object({
-  subjectName: zod.string(),
+  subjectName: zod.string().min(1),
   presentDays: zod
     .array(
       zod.string().refine((date) => !isNaN(Date.parse(date)), {
@@ -200,11 +215,15 @@ export const saveSubject = async (req, res) => {
       message: "Please give subject name",
     });
   }
+  console.log(req.userid);
+  
   const subject = await SubjectProfiles.create({
     subjectName: req.body.subjectName,
     presentDays: [],
     absentDays: [],
+    user: req.userid, 
   });
+
   if (subject) {
     res.json({
       msg: "Subject Created",
@@ -212,6 +231,7 @@ export const saveSubject = async (req, res) => {
     });
     return;
   }
+
   res.status(411).json({
     message: "Error while Creating Subject",
   });
@@ -220,7 +240,7 @@ export const saveSubject = async (req, res) => {
 //function to get all subjects from db
 export const getSubject = async (req, res) => {
   try {
-    const allSubjects = await SubjectProfiles.find({});
+    const allSubjects = await SubjectProfiles.find({ user: req.userid }); // Filter by user ID
     const subjects = allSubjects.map((subject) => ({
       subjectName: subject.subjectName,
       presentDays: subject.presentDays,
@@ -233,19 +253,17 @@ export const getSubject = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch subjects" });
   }
 };
-
 //function to delete a subject
 export const deleteSubject = async (req, res) => {
   try {
     const { _id } = req.query;
-    console.log(_id);
 
-    const result = await SubjectProfiles.findByIdAndDelete(_id);
-
-    if (!result) {
-      return res.status(404).json({ message: "Subject not found" });
+    const subject = await SubjectProfiles.findOne({ _id, user: req.userid }); // Ensure the subject belongs to the user
+    if (!subject) {
+      return res.status(404).json({ message: "Subject not found or unauthorized" });
     }
 
+    await SubjectProfiles.findByIdAndDelete(_id);
     res.status(200).json({ message: "Subject deleted successfully" });
   } catch (error) {
     console.error("Error deleting subject:", error);
@@ -256,18 +274,18 @@ export const deleteSubject = async (req, res) => {
 export const updateSubjectAttendence = async (req, res) => {
   try {
     const { _id } = req.query;
-    const { date, action } = req.body; // action can be "markPresent", "markAbsent", or "clear"
+    const { date, action } = req.body;
 
     if (!_id || !date || !action) {
       return res.status(400).json({ message: "Missing required fields" });
     }
-    if (!Date.parse(date)) {
-      return res.status(400).json({ message: "Invalid date format" });
-    }
-    const subject = await SubjectProfiles.findById(_id);
+
+    const subject = await SubjectProfiles.findOne({ _id, user: req.userid }); // Ensure the subject belongs to the user
     if (!subject) {
-      return res.status(404).json({ message: "Subject not found" });
+      return res.status(404).json({ message: "Subject not found or unauthorized" });
     }
+
+    // Rest of the logic remains the same
     switch (action) {
       case "markPresent":
         if (!subject.presentDays.includes(date)) {
@@ -286,6 +304,7 @@ export const updateSubjectAttendence = async (req, res) => {
       default:
         return res.status(400).json({ message: "Invalid action" });
     }
+
     await subject.save();
     res.status(200).json({
       message: "Subject attendance updated successfully",
@@ -303,7 +322,7 @@ export const updateSubjectAttendence = async (req, res) => {
 
 //todo body
 const todoBody = zod.object({
-  title: zod.string(),
+  title: zod.string().min(1),
   description: zod.string().optional(),
   isCompleted: zod.boolean().optional(),
 });
@@ -315,19 +334,25 @@ export const createTodo = async (req, res) => {
       message: "Please give Todo a Title",
     });
   }
+
   const existingTodo = await Todo.findOne({
     title: req.body.title,
+    user: req.userid, // Ensure the todo title is unique for the user
   });
+
   if (existingTodo) {
     return res.status(411).json({
       message: "Todo already exists",
     });
   }
+
   const todo = await Todo.create({
     title: req.body.title,
     description: req.body.description,
     isCompleted: false,
+    user: req.userid, // Add the user ID from the authenticated request
   });
+
   if (todo) {
     res.json({
       msg: "Todo Created",
@@ -335,15 +360,15 @@ export const createTodo = async (req, res) => {
     });
     return;
   }
+
   res.status(411).json({
     message: "Error while Creating Todo",
   });
 };
-
 //function to fetch all todos
 export const getTodos = async (req, res) => {
   try {
-    const allTodos = await Todo.find({});
+    const allTodos = await Todo.find({ user: req.userid }); // Filter by user ID
     const todos = allTodos.map((todo) => ({
       title: todo.title,
       description: todo.description,
@@ -359,16 +384,14 @@ export const getTodos = async (req, res) => {
 export const deleteTodo = async (req, res) => {
   try {
     const { title } = req.body;
-    console.log(title);
 
     if (!title) {
       return res.status(400).json({ message: "Title is required" });
     }
 
-    const result = await Todo.findOneAndDelete({ title });
-
+    const result = await Todo.findOneAndDelete({ title, user: req.userid }); // Ensure the todo belongs to the user
     if (!result) {
-      return res.status(404).json({ message: "Todo not found" });
+      return res.status(404).json({ message: "Todo not found or unauthorized" });
     }
 
     res.status(200).json({ message: "Todo deleted successfully" });

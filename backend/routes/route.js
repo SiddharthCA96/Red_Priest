@@ -27,28 +27,28 @@ router.post("/signin", signin);
 router.put("updateInfo", authMiddleware, updateInfo);
 
 //save user profiles detail route
-router.post("/saveDetails", saveDetails);
+router.patch("/saveDetails",authMiddleware, saveDetails);
 
 //route to create a subject in attendence tracker
-router.post("/createSubject", saveSubject);
+router.post("/createSubject", authMiddleware,saveSubject);
 
 //route to fetch all subjects fromm subjectProfiles (in attendence section)
-router.get("/getSubject", getSubject);
+router.get("/getSubject",authMiddleware, getSubject);
 
 //route to delete a subject from subjectsProfiles
-router.delete("/deleteSubject", deleteSubject);
+router.delete("/deleteSubject",authMiddleware, deleteSubject);
 
 //route to updateSubjectAttendence
-router.patch("/updateSubjectAttendence",updateSubjectAttendence);
+router.patch("/updateSubjectAttendence",authMiddleware,updateSubjectAttendence);
 
 //route to create todo
-router.post("/createTodo",createTodo);
+router.post("/createTodo",authMiddleware,createTodo);
 
 //route to fetch all todos
-router.get("/getTodos",getTodos);
+router.get("/getTodos",authMiddleware,getTodos);
 
 //route to delete todo
-router.delete("/deleteTodo",deleteTodo);
+router.delete("/deleteTodo",authMiddleware,deleteTodo);
 
 
 //get user route

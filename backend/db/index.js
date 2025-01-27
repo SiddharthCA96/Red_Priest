@@ -42,23 +42,39 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     maxLength: 30,
   },
-});
-//schema for the userDetails about coding profiles
-
-const ProfilesSchema = new mongoose.Schema({
   leetcodeId: {
     type: String,
+    trim: true,
   },
   codeforcesId: {
     type: String,
+    trim: true,
   },
   gfgId: {
     type: String,
+    trim: true,
   },
   githubId: {
     type: String,
+    trim: true,
   },
 });
+//schema for the userDetails about coding profiles
+
+// const ProfilesSchema = new mongoose.Schema({
+//   leetcodeId: {
+//     type: String,
+//   },
+//   codeforcesId: {
+//     type: String,
+//   },
+//   gfgId: {
+//     type: String,
+//   },
+//   githubId: {
+//     type: String,
+//   },
+// });
 
 //attendence subject schema
 const SubjectSchema = new mongoose.Schema({
@@ -81,6 +97,11 @@ const SubjectSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 
@@ -106,7 +127,12 @@ const TodoSchema=new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now,
-    }
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 });
 
 //create the  models
@@ -115,7 +141,7 @@ const TodoSchema=new mongoose.Schema({
 export const User = mongoose.model("User", UserSchema);
 
 //user profiles model
-export const UserProfiles = mongoose.model("UserProfiles", ProfilesSchema);
+// export const UserProfiles = mongoose.model("UserProfiles", ProfilesSchema);
 
 //attendence trackers subject model
 export const SubjectProfiles = mongoose.model("SubjectProfiles", SubjectSchema);
