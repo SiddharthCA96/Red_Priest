@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { optional, string, union } from "zod";
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;
@@ -59,22 +58,6 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 });
-//schema for the userDetails about coding profiles
-
-// const ProfilesSchema = new mongoose.Schema({
-//   leetcodeId: {
-//     type: String,
-//   },
-//   codeforcesId: {
-//     type: String,
-//   },
-//   gfgId: {
-//     type: String,
-//   },
-//   githubId: {
-//     type: String,
-//   },
-// });
 
 //attendence subject schema
 const SubjectSchema = new mongoose.Schema({
@@ -139,9 +122,6 @@ const TodoSchema=new mongoose.Schema({
 
 //user model
 export const User = mongoose.model("User", UserSchema);
-
-//user profiles model
-// export const UserProfiles = mongoose.model("UserProfiles", ProfilesSchema);
 
 //attendence trackers subject model
 export const SubjectProfiles = mongoose.model("SubjectProfiles", SubjectSchema);

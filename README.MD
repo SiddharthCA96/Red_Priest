@@ -37,3 +37,8 @@
 - Create Todo route done
 - Get All todos route done
 - Delete todo route done
+- Updated all routes with adding authentication using midddleware
+- Chnged the suer schema and deleted the profiles schema and incorporated that into the users schema
+- Chnaged the schemas of all and backends function so tghat each todo and subject has a users id 
+- Changed the functos so that only those todos and subject s come which are created by that user
+- Breaked the authcontrollers file and restructure the backend code
