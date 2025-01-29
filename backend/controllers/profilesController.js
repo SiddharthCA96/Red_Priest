@@ -20,17 +20,18 @@ export const saveDetails = async (req, res) => {
 
   try {
     const { leetcodeId, codeforcesId, gfgId, githubId } = req.body;
-    // Find the user and update their profiles
     const userId = req.userid;
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
-        leetcodeId: leetcodeId || null,
-        codeforcesId: codeforcesId || null,
-        gfgId: gfgId || null,
-        githubId: githubId || null,
+        $set: {
+          "userProfiles.leetcodeId": leetcodeId || null,
+          "userProfiles.codeforcesId": codeforcesId || null,
+          "userProfiles.gfgId": gfgId || null,
+          "userProfiles.githubId": githubId || null,
+        },
       },
-      { new: true, runValidators: true } // Return the updated document and validate the changes
+      { new: true, runValidators: true } // Return the updated document and validate changes
     );
 
     if (updatedUser) {
@@ -50,4 +51,3 @@ export const saveDetails = async (req, res) => {
     });
   }
 };
-

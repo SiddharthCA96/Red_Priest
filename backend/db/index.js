@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import uuidv4 from "uuid";
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;
@@ -41,22 +42,28 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     maxLength: 30,
   },
-  leetcodeId: {
-    type: String,
-    trim: true,
+  userProfiles:{
+    leetcodeId: {
+      type: String,
+      trim: true,
+    },
+    codeforcesId: {
+      type: String,
+      trim: true,
+    },
+    gfgId: {
+      type: String,
+      trim: true,
+    },
+    githubId: {
+      type: String,
+      trim: true,
+    },
   },
-  codeforcesId: {
-    type: String,
-    trim: true,
-  },
-  gfgId: {
-    type: String,
-    trim: true,
-  },
-  githubId: {
-    type: String,
-    trim: true,
-  },
+  inGroups:[{
+    type:mongoose.Schema.Types.ObjectId,ref:'Group',
+    default:[],
+  }]  
 });
 
 //attendence subject schema
@@ -118,6 +125,47 @@ const TodoSchema=new mongoose.Schema({
     },
 });
 
+//group Schema
+const GroupSchema=new mongoose.Schema({
+  name:{
+    type:String,
+    required:true,
+    unique:true,
+    trim:true,
+    minLength:3,
+    maxLength:30,
+  },
+  groupId: {
+    type: String,
+    default: uuidv4,
+    unique: true,    
+  },
+  admin:{
+    type:mongoose.Schema.Types.ObjectId,ref:'User',
+    required:true,
+  },
+  members:[
+    {
+      type:mongoose.Schema.Types.ObjectId,ref:'User',
+      default:[],
+    }
+  ],
+  messages:[{
+    sender:{
+      type:mongoose.Schema.Types.ObjectId,ref:'User',
+      required:true,
+    },
+    text:{
+      type:String,
+      required:true,
+    },
+    timestamp:{
+      type:Date,
+      default:Date.now,
+    },
+  }],
+})
+
 //create the  models
 
 //user model
@@ -128,3 +176,6 @@ export const SubjectProfiles = mongoose.model("SubjectProfiles", SubjectSchema);
 
 //todo model
 export const Todo=mongoose.model("Todo",TodoSchema);
+
+//group model
+export const Group=mongoose.model("Group",GroupSchema);
