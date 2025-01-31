@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "../components/chatUI/Card";
-import { Button } from "../components/chatUI/Button";
-import { Input } from "../components/chatUI/Input";
+import { Card, CardContent } from "./Card";
+import { Button } from "./Button";
+import { Input } from "./Input";
 import { Plus } from "lucide-react";
 
 const ChatBar = ({ setSelectedGroup }) => {

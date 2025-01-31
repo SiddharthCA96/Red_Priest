@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import uuidv4 from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 dotenv.config();
 
 export const MONGO_URI = process.env.MONGO_URI;

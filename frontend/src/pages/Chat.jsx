@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import DashbordNavbar from '../components/DashbordNavbar';
-import Sidebar from '../components/Sidebar';
-import ChatBar from '../components/ChatBar';
+import DashbordNavbar from '../components/DashbordNavbar.jsx';
+import Sidebar from '../components/Sidebar.jsx';
+import ChatBar from '../components/chatUI/ChatBar.jsx';
 import MessageBox from '../components/MessageBox';
 
 function Chat() {

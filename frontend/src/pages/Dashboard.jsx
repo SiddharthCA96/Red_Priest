@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import DashbordNavbar from '../components/DashbordNavbar';
-import Sidebar from '../components/Sidebar';
-import LeetcodeCard from '../components/LeetcodeCard';
-import CodeforceCard from '../components/CodeForcesCard';
+import DashbordNavbar from '../components/DashbordNavbar.jsx';
+import Sidebar from '../components/Sidebar.jsx';
+import LeetcodeCard from '../components/cards/LeetcodeCard';
+import CodeforceCard from '../components/cards/CodeForcesCard';
 import { DataContext } from '../utils/DataContext';
-import GfgCard from '../components/GfgCard';
+import GfgCard from '../components/cards/GfgCard';
 
 export const Dashboard = () => {
   const { data } = useContext(DataContext); 

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button } from './Button';
-import { InputBox } from './InputBox';
+import { Button } from './login/Button';
+import { InputBox } from './login/InputBox';
 import axios from 'axios';
 import { DataContext } from '../utils/DataContext'; 
 import { useNavigate } from 'react-router-dom'; 
