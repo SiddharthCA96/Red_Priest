@@ -47,3 +47,5 @@
  - npm i socket.io
  - npm install crypto-js(for encryption of messeges)
  - Write the fcn to create grp
+ - Write a fcn to join grp
+ - Write a fcn to fecth all mssg of a grp

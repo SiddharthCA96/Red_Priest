@@ -108,12 +108,48 @@ export const joinGroup = async (req, res) => {
     await group.save();
 
     // Add group to user's grp  list (if applicable)
-    user.inGroups.push(group._id);
+    user.inGroups.push(groupId);
     await user.save();
 
     res.status(200).json({ message: "Joined group successfully!" });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+// delete group (only by admin)
+const deleteBody = zod.object({
+  groupId: zod.string(),
+  adminId: zod.string(),
+});
+
+export const deleteGroup = async (req, res) => {
+  const { success } = deleteBody.safeParse(req.body);
+
+  if (!success) {
+    return res.status(404).json({
+      message: "Please provide a valid groupId",
+    });
+  }
+  const { groupId, adminId } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(adminId)) {
+    return res.status(400).json({ message: "Invalid adminId format" });
+  }
+  try {
+    const group =await Group.findOne({ groupId });
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    const admin = group.admin;
+    if (admin != adminId) {
+      return res
+        .status(403)
+        .json({ message: "Not an admin cant perform this action!" });
+    }
+    await Group.findOneAndDelete({ groupId });
+
+    return res.status(200).json({ message: "Group deleted successfully" });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
