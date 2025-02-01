@@ -1,5 +1,5 @@
 import zod from "zod";
-import { User, SubjectProfiles,} from "../db/index.js";
+import { User} from "../db/index.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 

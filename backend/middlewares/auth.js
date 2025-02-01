@@ -7,7 +7,7 @@ const jwtSecret = process.env.JWT_SECRET;
 //authentication 
 export const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  // console.log(authHeader);
+  console.log(authHeader);
   
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     return res.status(403).json({message: "Unauthorized"});
@@ -18,7 +18,8 @@ export const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
-
+    console.log(decoded.userid);
+    
     if (decoded.userid) {
       req.userid = decoded.userid;
       next();

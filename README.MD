@@ -43,3 +43,7 @@
 - Changed the functos so that only those todos and subject s come which are created by that user
 - Breaked the authcontrollers file and restructure the backend code
 - Group Schema added
+- Now work on chat functionality
+ - npm i socket.io
+ - npm install crypto-js(for encryption of messeges)
+ - Write the fcn to create grp
